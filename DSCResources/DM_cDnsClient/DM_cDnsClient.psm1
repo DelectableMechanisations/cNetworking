@@ -3,17 +3,18 @@
 DM_cDnsClient.psm1
 
 AUTHOR:         David Baumbach
-Version:        1.0.0
+Version:        1.0.1
 Creation Date:  21/11/2015
-Last Modified:  08/01/2016
+Last Modified:  09/01/2016
 
 
-This DSC module is used to configure the DNS Client settings of a network adapter that matches a specified filter.
+This DSC resource is used to configure the DNS Client settings of a network adapter that matches a specified filter.
 
 
 Change Log:
     0.0.1   21/11/2015  Initial Creation
     1.0.0   08/01/2016  First Published
+    1.0.1   09/01/2016  Cleaned up function parameters and added '[CmdletBinding()]' attribute.
 
 
 The code used to build the module.
@@ -36,7 +37,8 @@ The code used to build the module.
 
 #The Get-TargetResource function wrapper.
 Function Get-TargetResource {
-	[OutputType([System.Collections.Hashtable])]
+    [CmdletBinding()]
+    [OutputType([System.Collections.Hashtable])]
     Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('ApplyToMatchingAdapters', 'ApplytoNonMatchingAdapters')]
@@ -64,7 +66,7 @@ Function Get-TargetResource {
         [Parameter(Mandatory = $false)]
         [System.Boolean]
         $UseSuffixWhenRegistering
-	)
+    )
 
     ValidateProperties @PSBoundParameters -Mode Set
 }
@@ -74,6 +76,7 @@ Function Get-TargetResource {
 
 #The Set-TargetResource function wrapper.
 Function Set-TargetResource {
+    [CmdletBinding()]
     Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('ApplyToMatchingAdapters', 'ApplytoNonMatchingAdapters')]
@@ -101,7 +104,7 @@ Function Set-TargetResource {
         [Parameter(Mandatory = $false)]
         [System.Boolean]
         $UseSuffixWhenRegistering
-	)
+    )
 
     ValidateProperties @PSBoundParameters -Mode Set
 }
@@ -111,8 +114,9 @@ Function Set-TargetResource {
 
 #The Test-TargetResource function wrapper.
 Function Test-TargetResource {
-	[OutputType([System.Boolean])]
-	Param (
+    [CmdletBinding()]
+    [OutputType([System.Boolean])]
+    Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('ApplyToMatchingAdapters', 'ApplytoNonMatchingAdapters')]
         [System.String]
@@ -139,7 +143,7 @@ Function Test-TargetResource {
         [Parameter(Mandatory = $false)]
         [System.Boolean]
         $UseSuffixWhenRegistering
-	)
+    )
 
     ValidateProperties @PSBoundParameters -Mode Test
 }
@@ -149,6 +153,7 @@ Function Test-TargetResource {
 
 #This function has all the smarts in it and is used to do all of the configuring.
 Function ValidateProperties {
+    [CmdletBinding()]
     Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('ApplyToMatchingAdapters', 'ApplytoNonMatchingAdapters')]
@@ -178,9 +183,9 @@ Function ValidateProperties {
         $UseSuffixWhenRegistering = $false,
 
         [Parameter(Mandatory = $true)]
-		[ValidateSet('Get','Set','Test')]
-		[System.String]$Mode = 'Get'
-	)
+        [ValidateSet('Get','Set','Test')]
+        [System.String]$Mode = 'Get'
+    )
     
 
     #If Debug mode is on, don't prompt the user for permission to continue.

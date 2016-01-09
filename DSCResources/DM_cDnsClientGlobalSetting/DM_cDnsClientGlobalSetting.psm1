@@ -3,18 +3,19 @@
 DM_cDnsClientGlobalSetting.psm1
 
 AUTHOR:         David Baumbach
-Version:        1.0.0
+Version:        1.0.1
 Creation Date:  23/11/2015
-Last Modified:  08/01/2016
+Last Modified:  09/01/2016
 
 
-This DSC module is used to configure the DNS Client Global Settings (resolve computer names by appending the Primary and Connection Specific Suffix or by using a pre-defined
+This DSC resource is used to configure the DNS Client Global Settings (resolve computer names by appending the Primary and Connection Specific Suffix or by using a pre-defined
 list of DNS Suffixes).
 
 
 Change Log:
     0.0.1   23/11/2015  Initial Creation
     1.0.0   08/01/2016  First Published
+    1.0.1   09/01/2016  Cleaned up function parameters.
 
 
 The code used to build the module.
@@ -31,19 +32,22 @@ The code used to build the module.
 
 #The Get-TargetResource function wrapper.
 Function Get-TargetResource {
-	[CmdletBinding()]
-	[OutputType([System.Collections.Hashtable])]
+    [CmdletBinding()]
+    [OutputType([System.Collections.Hashtable])]
     Param (
         [Parameter(Mandatory = $true)]
-        [System.Boolean]$UsePrimaryAndConnectionSpecificSuffix,
+        [System.Boolean]
+        $UsePrimaryAndConnectionSpecificSuffix,
 
         [Parameter(Mandatory = $false)]
-        [System.String[]]$SuffixSearchList,
+        [System.String[]]
+        $SuffixSearchList,
 
         [Parameter(Mandatory = $false)]
-        [System.Boolean]$UseDevolution
-	)
-    
+        [System.Boolean]
+        $UseDevolution
+    )
+
     ValidateProperties @PSBoundParameters -Mode Get
 }
 
@@ -52,17 +56,20 @@ Function Get-TargetResource {
 
 #The Set-TargetResource function wrapper.
 Function Set-TargetResource {
-	[CmdletBinding()]
+    [CmdletBinding()]
     Param (
         [Parameter(Mandatory = $true)]
-        [System.Boolean]$UsePrimaryAndConnectionSpecificSuffix,
+        [System.Boolean]
+        $UsePrimaryAndConnectionSpecificSuffix,
 
         [Parameter(Mandatory = $false)]
-        [System.String[]]$SuffixSearchList,
+        [System.String[]]
+        $SuffixSearchList,
 
         [Parameter(Mandatory = $false)]
-        [System.Boolean]$UseDevolution
-	)
+        [System.Boolean]
+        $UseDevolution
+    )
 
     ValidateProperties @PSBoundParameters -Mode Set
 }
@@ -72,18 +79,21 @@ Function Set-TargetResource {
 
 #The Test-TargetResource function wrapper.
 Function Test-TargetResource {
-	[CmdletBinding()]
-	[OutputType([System.Boolean])]
-	Param (
+    [CmdletBinding()]
+    [OutputType([System.Boolean])]
+    Param (
         [Parameter(Mandatory = $true)]
-        [System.Boolean]$UsePrimaryAndConnectionSpecificSuffix,
+        [System.Boolean]
+        $UsePrimaryAndConnectionSpecificSuffix,
 
         [Parameter(Mandatory = $false)]
-        [System.String[]]$SuffixSearchList,
+        [System.String[]]
+        $SuffixSearchList,
 
         [Parameter(Mandatory = $false)]
-        [System.Boolean]$UseDevolution
-	)
+        [System.Boolean]
+        $UseDevolution
+    )
 
     ValidateProperties @PSBoundParameters -Mode Test
 }
@@ -93,22 +103,25 @@ Function Test-TargetResource {
 
 #This function has all the smarts in it and is used to do all of the configuring.
 Function ValidateProperties {
-
     [CmdletBinding()]
-	Param (
+    Param (
         [Parameter(Mandatory = $true)]
-        [System.Boolean]$UsePrimaryAndConnectionSpecificSuffix,
+        [System.Boolean]
+        $UsePrimaryAndConnectionSpecificSuffix,
 
         [Parameter(Mandatory = $false)]
-        [System.String[]]$SuffixSearchList,
+        [System.String[]]
+        $SuffixSearchList,
 
         [Parameter(Mandatory = $false)]
-        [System.Boolean]$UseDevolution,
+        [System.Boolean]
+        $UseDevolution,
 
         [Parameter(Mandatory = $true)]
-		[ValidateSet('Get','Set','Test')]
-		[System.String]$Mode = 'Get'
-	)
+        [ValidateSet('Get','Set','Test')]
+        [System.String]
+        $Mode = 'Get'
+    )
 
 
     #If Debug mode is on, don't prompt the user for permission to continue.

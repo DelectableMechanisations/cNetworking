@@ -3,12 +3,12 @@
 DM_cNetOffloadGlobalSetting.psm1
 
 AUTHOR:         David Baumbach
-Version:        1.0.0
+Version:        1.0.1
 Creation Date:  30/11/2015
-Last Modified:  08/01/2016
+Last Modified:  09/01/2016
 
 
-This DSC module is used to configure the Network Offload Global Settings on a computer. 
+This DSC resource is used to configure the Network Offload Global Settings on a computer. 
 If the 'Ensure' parameter is set to 'Present' then the Network Offload Global Settings are configured as per the specified parameters.
 If the 'Ensure' parameter is set to 'Absent' then the Network Offload Global Settings are configured as using their default values and the specified parameters are ignored.
 
@@ -16,6 +16,7 @@ If the 'Ensure' parameter is set to 'Absent' then the Network Offload Global Set
 Change Log:
     0.0.1   30/11/2015  Initial Creation
     1.0.0   08/01/2016  First Published
+    1.0.1   09/01/2016  Cleaned up function parameters.
 
 
 The code used to build the module.
@@ -54,8 +55,8 @@ data LocalizedData {
 
 #The Get-TargetResource function wrapper.
 Function Get-TargetResource {
-	[CmdletBinding()]
-	[OutputType([System.Collections.Hashtable])]
+    [CmdletBinding()]
+    [OutputType([System.Collections.Hashtable])]
     Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Present','Absent')]
@@ -96,8 +97,8 @@ Function Get-TargetResource {
         [ValidateSet('Disabled','Enabled')]
         [System.String]
         $PacketCoalescingFilter
-	)
-    
+    )
+
     ValidateProperties @PSBoundParameters -Mode Get
 }
 
@@ -106,7 +107,7 @@ Function Get-TargetResource {
 
 #The Set-TargetResource function wrapper.
 Function Set-TargetResource {
-	[CmdletBinding()]
+    [CmdletBinding()]
     Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Present','Absent')]
@@ -147,7 +148,7 @@ Function Set-TargetResource {
         [ValidateSet('Disabled','Enabled')]
         [System.String]
         $PacketCoalescingFilter
-	)
+    )
 
     ValidateProperties @PSBoundParameters -Mode Set
 }
@@ -157,9 +158,9 @@ Function Set-TargetResource {
 
 #The Test-TargetResource function wrapper.
 Function Test-TargetResource {
-	[CmdletBinding()]
-	[OutputType([System.Boolean])]
-	Param (
+    [CmdletBinding()]
+    [OutputType([System.Boolean])]
+    Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Present','Absent')]
         [System.String]
@@ -199,7 +200,7 @@ Function Test-TargetResource {
         [ValidateSet('Disabled','Enabled')]
         [System.String]
         $PacketCoalescingFilter
-	)
+    )
 
     ValidateProperties @PSBoundParameters -Mode Test
 }
@@ -209,9 +210,8 @@ Function Test-TargetResource {
 
 #This function has all the smarts in it and is used to do all of the configuring.
 Function ValidateProperties {
-
     [CmdletBinding()]
-	Param (
+    Param (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Present','Absent')]
         [System.String]
@@ -253,10 +253,10 @@ Function ValidateProperties {
         $PacketCoalescingFilter,
 
         [Parameter(Mandatory = $true)]
-		[ValidateSet('Get','Set','Test')]
-		[System.String]
+        [ValidateSet('Get','Set','Test')]
+        [System.String]
         $Mode = 'Get'
-	)
+    )
 
 
     #If Debug mode is on, don't prompt the user for permission to continue.
